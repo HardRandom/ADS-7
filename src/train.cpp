@@ -28,6 +28,7 @@ void Train::addCar(bool light) {
     }
 }
 int Train::getLength() {
+    if (!first || first->next == first)
     Car* start = first;
     start->light = true;
     int steps = 1;
@@ -40,11 +41,13 @@ int Train::getLength() {
         }
         if (current->light) {
             current->light = false;
-            for (int i = 0; i < steps; ++i) {
-                current = current->prev;
-                countOp++;
+            if (steps > 1) {
+                for (int i = 0; i < steps - 1; ++i) {
+                    current = current->prev;
+                    countOp++;
+                }
             }
-            if (!start->light) {
+            if (current->prev->light == false) {
                 return steps;
             } else {
                 steps++;
