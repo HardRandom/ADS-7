@@ -16,9 +16,9 @@ Train::~Train() {
 void Train::addCar(bool light) {
     Car* newCar = new Car{light, nullptr, nullptr};
     if (!first) {
+        newCar->next = newCar;
+        newCar->prev = newCar;
         first = newCar;
-        first->next = first;
-        first->prev = first;
     } else {
         Car* last = first->prev;
         last->next = newCar;
