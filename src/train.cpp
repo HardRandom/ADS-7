@@ -1,6 +1,5 @@
 // Copyright 2021 NNTU-CS
 #include "train.h"
-#include <iostream>
 #include <stdexcept>
 
 Train::Train() : countOp(0), first(nullptr) {}
@@ -32,29 +31,26 @@ void Train::addCar(bool light) {
 
 int Train::getLength() {
     Car* start = first;
-    start->light = true;  
-    countOp = 1;          
+    start->light = true;
     int steps = 1;
+
     while (true) {
-        // Идём вперёд на `steps` шагов
         Car* current = start;
         for (int i = 0; i < steps; i++) {
             current = current->next;
-            countOp++;
+            countOp++;  // Учитываем переход
         }
         if (current->light) {
             current->light = false;
-            countOp++; 
             for (int i = 0; i < steps; i++) {
                 current = current->prev;
-                countOp++;
+                countOp++; 
             }
-            if (!current->light) {
+            if (!start->light) {
                 return steps;
             } else {
                 steps++;
                 start->light = true; 
-                countOp++;
             }
         } else {
             steps++;
