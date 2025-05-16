@@ -5,17 +5,20 @@
 Train::Train() : countOp(0), first(nullptr) {}
 
 Train::~Train() {
-    if (!first) return;
-    Car* current = first;
-    do {
-        Car* temp = current;
-        current = current->next;
-        delete temp;
-    } while (current != first);
+    if (first) {
+        Car* current = first->next;
+        while (current != first) {
+            Car* temp = current;
+            current = current->next;
+            delete temp;
+        }
+        delete first; // Удаляем первый вагон
+    }
 }
 void Train::addCar(bool light) {
     Car* newCar = new Car{light, nullptr, nullptr};
     if (!first) {
+        // Первый вагон ссылается сам на себя
         newCar->next = newCar;
         newCar->prev = newCar;
         first = newCar;
