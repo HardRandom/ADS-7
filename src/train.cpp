@@ -1,9 +1,9 @@
 // Copyright 2021 NNTU-CS
 #include "train.h"
-#include <iostream>
+#include <stdexcept>
 
-Train() : countOp(0), first(nullptr) {}
-    ~Train() {
+Train::Train() : countOp(0), first(nullptr) {}
+Train::~Train() {
         if (!first) return;
         Car* current = first;
         do {
@@ -12,7 +12,7 @@ Train() : countOp(0), first(nullptr) {}
             delete temp;
         } while (current != first);
     }
-void addCar(bool light) {
+void Train::addCar(bool light) {
     Car* newCar = new Car{light, nullptr, nullptr};
     if (!first) {
         first = newCar;
@@ -26,7 +26,7 @@ void addCar(bool light) {
           first->prev = newCar;
        }
  }
-int getLength() {
+int Train::getLength() {
     if (!first) return 0;
     Car* start = first;
     start->light = true;
@@ -55,6 +55,6 @@ int getLength() {
            }
        }
   }
-int getOpCount() const {
+int Train::getOpCount() const {
     return countOp;
 }
