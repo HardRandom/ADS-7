@@ -1,6 +1,7 @@
 // Copyright 2021 NNTU-CS
-#include "train.h"
+#include "Train.h"
 #include <iostream>
+#include <stdexcept>
 
 Train::Train() : countOp(0), first(nullptr) {}
 
@@ -30,14 +31,10 @@ void Train::addCar(bool light) {
 }
 
 int Train::getLength() {
-    if (!first) return 0;
-
     Car* start = first;
-    start->light = true;  // помечаем начальный вагон
-    countOp++;
-
-    int steps = 1;  // начинаем с 1, т.к. уже сделали шаг
-
+    start->light = true;  
+    countOp = 1;          
+    int steps = 1;
     while (true) {
         // Идём вперёд на `steps` шагов
         Car* current = start;
@@ -45,26 +42,22 @@ int Train::getLength() {
             current = current->next;
             countOp++;
         }
-
-        // Если свет включён — выключаем и возвращаемся
         if (current->light) {
             current->light = false;
-            countOp++;
-
-            // Возвращаемся на `steps` шагов назад
+            countOp++; 
             for (int i = 0; i < steps; i++) {
                 current = current->prev;
                 countOp++;
             }
-
-            // Проверяем, выключен ли свет в стартовом вагоне
             if (!current->light) {
-                return steps;  // нашли длину поезда
+                return steps;
             } else {
-                steps++;  // увеличиваем счётчик и повторяем
+                steps++;
+                start->light = true; 
+                countOp++;
             }
         } else {
-            steps++;  // если свет выключен, продолжаем идти дальше
+            steps++;
         }
     }
 }
