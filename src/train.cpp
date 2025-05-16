@@ -1,5 +1,5 @@
 // Copyright 2021 NNTU-CS
-#include "Train.h"
+#include "train.h"
 #include <iostream>
 #include <stdexcept>
 
